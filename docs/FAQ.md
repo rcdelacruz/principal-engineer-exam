@@ -51,9 +51,6 @@
 ### Q: Do I need to actually deploy the application?
 **A**: Yes, a working live deployment accessible via URL is required. Choose a platform you're comfortable with.
 
-### Q: Will deployment costs be covered?
-**A**: We'll reimburse reasonable deployment costs up to $50 with receipts. Most platforms offer free tiers sufficient for this exam.
-
 ### Q: Can I use different platforms for different services?
 **A**: Yes, you can deploy frontend and backend to different platforms if it makes sense for your architecture. Document your reasoning.
 

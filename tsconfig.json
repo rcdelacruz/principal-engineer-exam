@@ -1,0 +1,81 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./apps/web/src/*"],
+      "@/api/*": ["./apps/api/src/*"],
+      "@/admin/*": ["./apps/admin/src/*"],
+      "@/shared/*": ["./packages/shared/src/*"],
+      "@/ui/*": ["./packages/ui/src/*"],
+      "@/auth/*": ["./packages/auth/src/*"],
+      "@/database/*": ["./packages/database/src/*"]
+    },
+    "types": ["jest", "@types/node"],
+    "declaration": true,
+    "declarationMap": true,
+    "composite": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "apps/**/*.ts",
+    "apps/**/*.tsx",
+    "packages/**/*.ts",
+    "packages/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build",
+    ".next",
+    "coverage",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ],
+  "references": [
+    {
+      "path": "./apps/web"
+    },
+    {
+      "path": "./apps/api"
+    },
+    {
+      "path": "./apps/admin"
+    },
+    {
+      "path": "./packages/shared"
+    },
+    {
+      "path": "./packages/ui"
+    },
+    {
+      "path": "./packages/auth"
+    },
+    {
+      "path": "./packages/database"
+    }
+  ]
+}

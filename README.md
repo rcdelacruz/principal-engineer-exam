@@ -65,11 +65,6 @@ Deploy to **any platform** of your choice:
 3. **Include deployment automation** (CI/CD pipeline)
 4. **Justify your platform choice** in your architecture documentation
 
-### **Cost Considerations**
-- Use **free tiers** when available
-- We'll reimburse reasonable deployment costs (up to $50) with receipts
-- Document estimated monthly costs for production scale
-
 ## Getting Started
 
 1. **Fork this repository** to your personal GitHub account

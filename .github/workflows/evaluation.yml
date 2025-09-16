@@ -41,7 +41,7 @@ jobs:
         
       - name: Architecture documentation check
         run: |
-          echo "📋 Checking required documentation..."
+          echo "Checking required documentation..."
           
           required_docs=(
             "docs/ARCHITECTURE.md"
@@ -55,17 +55,17 @@ jobs:
           for doc in "${required_docs[@]}"; do
             if [ ! -f "$doc" ]; then
               missing_docs+=("$doc")
-              echo "❌ Missing: $doc"
+              echo "Missing: $doc"
             else
-              echo "✅ Found: $doc"
+              echo "Found: $doc"
             fi
           done
           
           if [ ${#missing_docs[@]} -gt 0 ]; then
-            echo "⚠️  Missing documentation files: ${missing_docs[*]}"
+            echo "Missing documentation files: ${missing_docs[*]}"
             echo "This will affect your evaluation score."
           else
-            echo "✅ All required documentation found!"
+            echo "All required documentation found!"
           fi
 
   testing:
@@ -313,62 +313,62 @@ jobs:
     steps:
       - name: Generate evaluation report
         run: |
-          echo "# 🎯 Principal Engineer Exam - Evaluation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "# Principal Engineer Exam - Evaluation Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## 📊 Results Overview" >> $GITHUB_STEP_SUMMARY
+          echo "## Results Overview" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           
           # Code Quality Results
           if [ "${{ needs.code-quality.result }}" == "success" ]; then
-            echo "✅ **Code Quality**: PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "**Code Quality**: PASSED" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ **Code Quality**: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "**Code Quality**: FAILED" >> $GITHUB_STEP_SUMMARY
           fi
           
           # Testing Results
           if [ "${{ needs.testing.result }}" == "success" ]; then
-            echo "✅ **Testing**: PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "**Testing**: PASSED" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ **Testing**: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "**Testing**: FAILED" >> $GITHUB_STEP_SUMMARY
           fi
           
           # Security Results
           if [ "${{ needs.security.result }}" == "success" ]; then
-            echo "✅ **Security**: PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "**Security**: PASSED" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ **Security**: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "**Security**: FAILED" >> $GITHUB_STEP_SUMMARY
           fi
           
           # Build Results
           if [ "${{ needs.build.result }}" == "success" ]; then
-            echo "✅ **Build**: PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "**Build**: PASSED" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ **Build**: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "**Build**: FAILED" >> $GITHUB_STEP_SUMMARY
           fi
           
           # Performance Results
           if [ "${{ needs.performance.result }}" == "success" ]; then
-            echo "✅ **Performance**: PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "**Performance**: PASSED" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ **Performance**: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "**Performance**: FAILED" >> $GITHUB_STEP_SUMMARY
           fi
           
           # E2E Results
           if [ "${{ needs.e2e-tests.result }}" == "success" ]; then
-            echo "✅ **E2E Tests**: PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "**E2E Tests**: PASSED" >> $GITHUB_STEP_SUMMARY
           else
-            echo "❌ **E2E Tests**: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "**E2E Tests**: FAILED" >> $GITHUB_STEP_SUMMARY
           fi
           
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## 📝 Evaluation Criteria" >> $GITHUB_STEP_SUMMARY
+          echo "## Evaluation Criteria" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Code Quality & Architecture (35%)**: TypeScript usage, design patterns, clean code" >> $GITHUB_STEP_SUMMARY
           echo "- **System Design Thinking (30%)**: Architecture documentation, scalability decisions" >> $GITHUB_STEP_SUMMARY
           echo "- **Problem-solving Approach (20%)**: Creative solutions, edge case handling" >> $GITHUB_STEP_SUMMARY
           echo "- **DevOps/Deployment Skills (15%)**: CI/CD, infrastructure, monitoring" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "## 🔍 Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "## Next Steps" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "1. Review failed checks and address issues" >> $GITHUB_STEP_SUMMARY
           echo "2. Ensure all required documentation is complete" >> $GITHUB_STEP_SUMMARY

@@ -25,7 +25,7 @@ You're tasked with building **"TechFlow"** - a SaaS platform that combines:
 
 ## AI-Assisted Development Policy
 
-### ✅ **Allowed AI Tools**
+### **Allowed AI Tools**
 You are **encouraged** to use AI-assisted development tools including:
 - **GitHub Copilot** - Code completion and suggestions
 - **ChatGPT/Claude** - Technical guidance and code review
@@ -33,20 +33,20 @@ You are **encouraged** to use AI-assisted development tools including:
 - **Codeium** - AI code completion
 - **Any other AI coding assistants**
 
-### 📋 **AI Usage Requirements**
+### **AI Usage Requirements**
 1. **Document your AI usage** in your final submission
 2. **Understand the code** - you must be able to explain all generated code
 3. **Test AI-generated code** - ensure it works and follows best practices
 4. **Customize AI suggestions** - don't blindly accept all suggestions
 
-### 🎯 **Evaluation Approach**
+### **Evaluation Approach**
 - AI usage will **not** negatively impact your evaluation
 - We evaluate **final code quality** and **your understanding**, not how you created it
 - During technical interviews, you'll be asked to explain your implementation decisions
 
 ## Deployment Platform Flexibility
 
-### ☁️ **Cloud Platform Options**
+### **Cloud Platform Options**
 Deploy to **any platform** of your choice:
 - **AWS** (recommended) - EC2, ECS, Lambda, Amplify
 - **Google Cloud Platform** - Compute Engine, Cloud Run, App Engine
@@ -59,13 +59,13 @@ Deploy to **any platform** of your choice:
 - **Heroku** - Simple platform-as-a-service
 - **Self-hosted** - Your own servers or VPS
 
-### 📋 **Deployment Requirements**
+### **Deployment Requirements**
 1. **Working live deployment** accessible via URL
 2. **Document your deployment process** in `docs/DEPLOYMENT.md`
 3. **Include deployment automation** (CI/CD pipeline)
 4. **Justify your platform choice** in your architecture documentation
 
-### 💰 **Cost Considerations**
+### **Cost Considerations**
 - Use **free tiers** when available
 - We'll reimburse reasonable deployment costs (up to $50) with receipts
 - Document estimated monthly costs for production scale

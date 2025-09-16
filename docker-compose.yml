@@ -1,0 +1,154 @@
+version: '3.8'
+
+services:
+  # Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: techflow-postgres
+    environment:
+      POSTGRES_DB: techflow_dev
+      POSTGRES_USER: techflow
+      POSTGRES_PASSWORD: techflow_password
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U techflow -d techflow_dev"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - techflow-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: techflow-redis
+    command: redis-server --requirepass redis_password
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - techflow-network
+
+  # API Backend
+  api:
+    build:
+      context: .
+      target: api-runner
+    container_name: techflow-api
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://techflow:techflow_password@postgres:5432/techflow_dev
+      REDIS_URL: redis://:redis_password@redis:6379
+      JWT_SECRET: development_jwt_secret_change_in_production
+      API_PORT: 3001
+      CORS_ORIGINS: http://localhost:3000,http://localhost:3002
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./apps/api:/app/apps/api:ro
+      - ./packages:/app/packages:ro
+      - api_node_modules:/app/node_modules
+    networks:
+      - techflow-network
+    restart: unless-stopped
+
+  # Web Frontend
+  web:
+    build:
+      context: .
+      target: web-runner
+    container_name: techflow-web
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: pk_test_your_stripe_key_here
+      DATABASE_URL: postgresql://techflow:techflow_password@postgres:5432/techflow_dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./apps/web:/app/apps/web:ro
+      - ./packages:/app/packages:ro
+      - web_node_modules:/app/node_modules
+    networks:
+      - techflow-network
+    restart: unless-stopped
+
+  # Admin Dashboard
+  admin:
+    build:
+      context: .
+      dockerfile: apps/admin/Dockerfile
+    container_name: techflow-admin
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      ADMIN_SECRET: admin_secret_change_in_production
+    ports:
+      - "3002:3000"
+    depends_on:
+      - api
+    volumes:
+      - ./apps/admin:/app/apps/admin:ro
+      - ./packages:/app/packages:ro
+    networks:
+      - techflow-network
+    restart: unless-stopped
+
+  # Development Tools
+  mailhog:
+    image: mailhog/mailhog
+    container_name: techflow-mailhog
+    ports:
+      - "1025:1025"  # SMTP server
+      - "8025:8025"  # Web UI
+    networks:
+      - techflow-network
+
+  # Monitoring (Optional - for development)
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: techflow-jaeger
+    environment:
+      COLLECTOR_OTLP_ENABLED: true
+    ports:
+      - "16686:16686"  # Jaeger UI
+      - "14250:14250"  # gRPC
+      - "4317:4317"    # OTLP gRPC
+      - "4318:4318"    # OTLP HTTP
+    networks:
+      - techflow-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  api_node_modules:
+    driver: local
+  web_node_modules:
+    driver: local
+
+networks:
+  techflow-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
